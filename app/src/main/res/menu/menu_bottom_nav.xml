@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/fragment_file"
+        android:title="File"
+        android:icon="@drawable/file"/>
+    <item
+        android:id="@+id/fragment_map"
+        android:title="Map"
+        android:icon="@drawable/map"/>
+    <item
+        android:id="@+id/fragment_home"
+        android:title="Home"
+        android:icon="@drawable/home"/>
+    <item
+        android:id="@+id/fragment_memo"
+        android:title="Memo"
+        android:icon="@drawable/memo"/>
+    <item
+        android:id="@+id/fragment_calendar"
+        android:title="Calendar"
+        android:icon="@drawable/calendar"/>
+</menu>
