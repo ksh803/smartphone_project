@@ -1,4 +1,3 @@
-// 메인
 package kr.ac.project;
 
 import android.os.Bundle;
@@ -7,6 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import android.view.MenuItem;
+
+import kr.ac.project.Fragment.CalendarFragment;
+import kr.ac.project.Fragment.FileFragment;
+import kr.ac.project.Fragment.HomeFragment;
+import kr.ac.project.Fragment.MapFragment;
+import kr.ac.project.Fragment.MemoFragment;
+import kr.ac.project.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,22 +28,16 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFragment = null;
                 int itemId = item.getItemId();
-                switch (itemId) {
-                    case 1: // Fragment File
-                        selectedFragment = new FileFragment();
-                        break;
-                    case 2: // Fragment Map
-                        selectedFragment = new MapFragment();
-                        break;
-                    case 3: // Fragment Home
-                        selectedFragment = new HomeFragment();
-                        break;
-                    case 4: // Fragment Memo
-                        selectedFragment = new MemoFragment();
-                        break;
-                    case 5: // Fragment Calendar
-                        selectedFragment = new CalendarFragment();
-                        break;
+                if (itemId == R.id.fragment_file) {
+                    selectedFragment = new FileFragment();
+                } else if (itemId == R.id.fragment_map) {
+                    selectedFragment = new MapFragment();
+                } else if (itemId == R.id.fragment_home) {
+                    selectedFragment = new HomeFragment();
+                } else if (itemId == R.id.fragment_memo) {
+                    selectedFragment = new MemoFragment();
+                } else if (itemId == R.id.fragment_calendar) {
+                    selectedFragment = new CalendarFragment();
                 }
                 if (selectedFragment != null) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_container, selectedFragment).commit();
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 앱 초기 실행 시 홈화면으로 설정
         if (savedInstanceState == null) {
-            bottomNavigationView.setSelectedItemId(3); // Fragment Home
+            bottomNavigationView.setSelectedItemId(R.id.fragment_home); // Fragment Home
         }
     }
 }
