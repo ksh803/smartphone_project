@@ -16,6 +16,8 @@ import android.widget.Toast;
 import kr.ac.project.Database.DatabaseHelper;
 import kr.ac.project.R;
 
+// SignUpActivity.java
+
 public class SignUpActivity extends AppCompatActivity {
 
     private EditText editTextName, editTextPhone, editTextEmail, editTextUsername, editTextPassword, editTextConfirmPassword;
@@ -27,7 +29,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.make_id_password);
 
-        dbHelper = new DatabaseHelper(this);
+        dbHelper = DatabaseHelper.getInstance(this);
 
         editTextName = findViewById(R.id.EditTextName);
         editTextPhone = findViewById(R.id.EditTextPhone);
