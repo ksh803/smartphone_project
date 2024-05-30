@@ -1,9 +1,11 @@
-package kr.ac.project;
+package kr.ac.project.Activity;
 
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import kr.ac.project.R;
 
 public class IDPWFindActivity extends AppCompatActivity {
 

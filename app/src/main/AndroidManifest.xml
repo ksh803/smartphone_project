@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Project"
         tools:targetApi="31">
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -22,8 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"/>
-        <activity android:name=".IDPWFindActivity"/>
-        <activity android:name=".SignUpActivity"/>
+        <activity android:name=".Activity.IDPWFindActivity"/>
+        <activity android:name=".Activity.SignUpActivity"/>
 
     </application>
 

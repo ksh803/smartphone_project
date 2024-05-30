@@ -1,6 +1,6 @@
 // 로그인 화면
 
-package kr.ac.project;// LoginActivity.java
+package kr.ac.project.Activity;// LoginActivity.java
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,6 +12,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import kr.ac.project.Database.DatabaseHelper;
+import kr.ac.project.MainActivity;
+import kr.ac.project.R;
 
 public class LoginActivity extends AppCompatActivity {
 
