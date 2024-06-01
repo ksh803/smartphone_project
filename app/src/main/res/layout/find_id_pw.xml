@@ -17,6 +17,7 @@
         android:textColor="@color/white"
         android:gravity="center"
         android:padding="10dp"
+        android:fontFamily="@font/mango"
         />
 
     <LinearLayout
@@ -33,6 +34,7 @@
             android:text="[이름]"
             android:textSize="10sp"
             android:textStyle="bold"
+            android:fontFamily="@font/mango"
             android:layout_marginTop="20dp"
             />
 
@@ -41,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="이름을 입력하세요"
+            android:fontFamily="@font/mango"
             android:inputType="text" />
 
         <TextView
@@ -48,6 +51,7 @@
             android:layout_height="wrap_content"
             android:text="[휴대폰 번호]"
             android:textSize="10sp"
+            android:fontFamily="@font/mango"
             android:textStyle="bold"
             android:layout_marginTop="20dp"
             />
@@ -57,6 +61,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="휴대폰 번호를 입력하세요"
+
+            android:fontFamily="@font/mango"
             android:inputType="phone" />
 
         <Button
@@ -64,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="ID/PW 찾기"
+            android:fontFamily="@font/mango"
             android:layout_marginTop="30sp"
             />
     </LinearLayout>

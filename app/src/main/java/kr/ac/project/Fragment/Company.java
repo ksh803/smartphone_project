@@ -1,4 +1,4 @@
-package kr.ac.project;
+package kr.ac.project.Fragment;
 
 import com.google.android.gms.maps.model.LatLng;
 
