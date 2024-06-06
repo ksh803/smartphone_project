@@ -18,6 +18,6 @@
         android:icon="@drawable/memo"/>
     <item
         android:id="@+id/fragment_calendar"
-        android:title="Calendar"
+        android:title="Scheduler"
         android:icon="@drawable/calendar"/>
 </menu>

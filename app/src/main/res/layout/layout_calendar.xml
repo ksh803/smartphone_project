@@ -1,6 +1,63 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Fragment.CalendarFragment">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- 상단에 "Scheduler" 텍스트 추가 -->
+        <TextView
+            android:id="@+id/schedulerTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Scheduler"
+            android:textSize="24sp"
+            android:layout_alignParentStart="true"
+            android:textStyle="bold"
+            android:fontFamily="@font/mango" />
+
+        <!-- + 버튼 추가 -->
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/circle_edit"
+            android:text="+"
+            android:textSize="20dp"
+            android:contentDescription="Add Event"
+            android:elevation="4dp"
+            android:padding="8dp" />
+    </RelativeLayout>
+
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp"
+        app:mcv_showOtherDates="all"/>
+
+    <TextView
+        android:id="@+id/noEventsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No events for this date."
+        android:gravity="center"
+        android:visibility="gone"
+        android:padding="16dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="vertical"/>
+</LinearLayout>

@@ -12,7 +12,6 @@ import kr.ac.project.Fragment.FileFragment;
 import kr.ac.project.Fragment.HomeFragment;
 import kr.ac.project.Fragment.MapFragment;
 import kr.ac.project.Fragment.MemoFragment;
-import kr.ac.project.R;
 
 public class MainActivity extends AppCompatActivity {
 
