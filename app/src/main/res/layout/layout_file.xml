@@ -34,7 +34,7 @@
             android:onClick="OpenGitHub"
             />
         <ImageButton
-            android:id="@+id/LinkedinBtn"
+            android:id="@+id/LinkedInBtn"
             android:scaleType="fitCenter"
             android:background="@drawable/circle_edit"
             android:layout_width="0dp"
@@ -88,13 +88,13 @@
         >
 
         <ListView
-            android:id="@+id/pdfListView"
+            android:id="@+id/PdfListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
 
         <Button
-            android:id="@+id/uploadButton"
+            android:id="@+id/UploadButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="파일 추가"
