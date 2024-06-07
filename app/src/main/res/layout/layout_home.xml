@@ -198,4 +198,23 @@
                 android:visibility="gone"/> <!-- 저장 버튼은 초기에는 숨겨둠 -->
         </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/HomeLogOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@color/purple_200"
+            android:fontFamily="@font/mango"
+            android:layout_marginTop="20dp"
+            android:text="로그아웃"
+            android:textSize="10dp"
+            />
+
+    </LinearLayout>
 </LinearLayout>

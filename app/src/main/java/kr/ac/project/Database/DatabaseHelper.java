@@ -22,7 +22,7 @@ import kr.ac.project.Event;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "user.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2; // Incremented the version number
 
     private static DatabaseHelper instance; // Singleton instance
 
@@ -34,6 +34,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_EMAIL = "email";
     public static final String COLUMN_USERNAME = "username";
     public static final String COLUMN_PASSWORD = "password";
+    public static final String COLUMN_AGE = "age";
+    public static final String COLUMN_MAJOR = "major";
+    public static final String COLUMN_UNIVERSITY = "university";
 
     private static final String TABLE_CREATE_USER =
             "CREATE TABLE " + TABLE_USER + " (" +
@@ -42,7 +45,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_PHONE + " TEXT, " +
                     COLUMN_EMAIL + " TEXT, " +
                     COLUMN_USERNAME + " TEXT, " +
-                    COLUMN_PASSWORD + " TEXT);";
+                    COLUMN_PASSWORD + " TEXT, " +
+                    COLUMN_AGE + " INTEGER, " +  // Added new column for age
+                    COLUMN_MAJOR + " TEXT, " +   // Added new column for major
+                    COLUMN_UNIVERSITY + " TEXT);";  // Added new column for university
 
     // 이벤트 테이블 및 컬럼 이름 정의
     public static final String TABLE_EVENTS = "events";
@@ -78,9 +84,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
-        onCreate(db);
+        if (oldVersion < 2) {
+            // Add new columns for age, major, university
+            db.execSQL("ALTER TABLE " + TABLE_USER + " ADD COLUMN " + COLUMN_AGE + " INTEGER;");
+            db.execSQL("ALTER TABLE " + TABLE_USER + " ADD COLUMN " + COLUMN_MAJOR + " TEXT;");
+            db.execSQL("ALTER TABLE " + TABLE_USER + " ADD COLUMN " + COLUMN_UNIVERSITY + " TEXT;");
+        }
     }
 
     // 이벤트 삽입 메서드

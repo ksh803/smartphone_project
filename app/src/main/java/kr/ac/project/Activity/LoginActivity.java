@@ -56,8 +56,9 @@ public class LoginActivity extends AppCompatActivity {
         buttonFindIdPW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // ID/PW 찾기 기능 구현 예정
-                Toast.makeText(LoginActivity.this, "ID/PW 찾기 기능은 아직 구현되지 않았습니다.", Toast.LENGTH_SHORT).show();
+                // ID/PW 찾기 기능을 위한 Intent 생성
+                Intent intent = new Intent(LoginActivity.this, IDPWFindActivity.class);
+                startActivity(intent);
             }
         });
     }
