@@ -1,11 +1,11 @@
-package kr.ac.project;
+package kr.ac.project.Activity;
 
-public class Memo {
+public class MemoActivity {
     private String title;
     private String memo;
     private String timestamp;
 
-    public Memo(String title, String memo, String timestamp) {
+    public MemoActivity(String title, String memo, String timestamp) {
         this.title = title;
         this.memo = memo;
         this.timestamp = timestamp;

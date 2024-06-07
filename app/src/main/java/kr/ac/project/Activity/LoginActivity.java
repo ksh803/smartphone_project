@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // DatabaseHelper 초기화
-        dbHelper = new DatabaseHelper(this);
+        dbHelper = DatabaseHelper.getInstance(this);
 
         // 뷰 초기화
         editTextUsername = findViewById(R.id.Username);

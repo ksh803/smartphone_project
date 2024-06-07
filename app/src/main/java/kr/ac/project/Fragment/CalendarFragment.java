@@ -62,7 +62,7 @@ public class CalendarFragment extends Fragment {
             openAddEventDialog();
         });
 
-        // Initialize decorators with existing events
+        // 기존 이벤트를 사용하여 데코레이터 초기화
         Set<Event> allEvents = dbHelper.getAllEvents();
         if (!allEvents.isEmpty()) {
             calendarView.addDecorator(new EventDecorator(allEvents));
@@ -92,7 +92,9 @@ public class CalendarFragment extends Fragment {
 
     private void updateEventsForSelectedDate() {
         eventsForSelectedDate.clear();
-        eventsForSelectedDate.addAll(dbHelper.getEventsForDate(selectedDate));
+        if (selectedDate != null) {
+            eventsForSelectedDate.addAll(dbHelper.getEventsForDate(selectedDate));
+        }
         eventAdapter.notifyDataSetChanged();
 
         if (eventsForSelectedDate.isEmpty()) {

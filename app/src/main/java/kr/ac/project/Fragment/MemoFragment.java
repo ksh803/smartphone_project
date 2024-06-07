@@ -18,12 +18,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import kr.ac.project.Memo;
+import kr.ac.project.Activity.MemoActivity;
 import kr.ac.project.MemoAdapter;
 import kr.ac.project.R;
 
 public class MemoFragment extends Fragment implements MemoAdapter.OnMemoListener {
-    private List<Memo> memoList;
+    private List<MemoActivity> memoList;
     private MemoAdapter adapter;
     private EditText editTextTitle;
     private EditText editTextMemo;
@@ -50,7 +50,7 @@ public class MemoFragment extends Fragment implements MemoAdapter.OnMemoListener
             String memoTitle = editTextTitle.getText().toString();
             if (!memoText.isEmpty() && !memoTitle.isEmpty()) {
                 String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
-                memoList.add(new Memo(memoTitle, memoText, timestamp));
+                memoList.add(new MemoActivity(memoTitle, memoText, timestamp));
                 adapter.notifyDataSetChanged();
                 editTextTitle.setText("");
                 editTextMemo.setText("");
@@ -82,7 +82,7 @@ public class MemoFragment extends Fragment implements MemoAdapter.OnMemoListener
     }
 
     private void showEditDialog(int position) {
-        Memo memo = memoList.get(position);
+        MemoActivity memo = memoList.get(position);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("메모 수정");
 
@@ -97,7 +97,7 @@ public class MemoFragment extends Fragment implements MemoAdapter.OnMemoListener
             String updatedMemoTitle = inputTitle.getText().toString();
             String updatedMemoText = inputMemo.getText().toString();
             if (!updatedMemoText.isEmpty() && !updatedMemoTitle.isEmpty()) {
-                memoList.set(position, new Memo(updatedMemoTitle, updatedMemoText, memo.getTimestamp()));
+                memoList.set(position, new MemoActivity(updatedMemoTitle, updatedMemoText, memo.getTimestamp()));
                 adapter.notifyItemChanged(position);
                 Toast.makeText(getContext(), "메모가 수정되었습니다.", Toast.LENGTH_SHORT).show();
             } else {

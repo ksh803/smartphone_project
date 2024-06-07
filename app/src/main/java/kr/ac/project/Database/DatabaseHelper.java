@@ -26,7 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static DatabaseHelper instance; // Singleton instance
 
-    // Table and column names for user
+    // 사용자 테이블 및 컬럼 이름 정의
     public static final String TABLE_USER = "user";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAME = "name";
@@ -44,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_USERNAME + " TEXT, " +
                     COLUMN_PASSWORD + " TEXT);";
 
-    // Table and column names for events
+    // 이벤트 테이블 및 컬럼 이름 정의
     public static final String TABLE_EVENTS = "events";
     public static final String COLUMN_EVENT_ID = "event_id";
     public static final String COLUMN_EVENT_TITLE = "title";
@@ -58,11 +58,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_EVENT_TIME + " TEXT, " +
                     COLUMN_EVENT_DATE + " TEXT);";
 
-    public DatabaseHelper(Context context) {
+    private DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    // Singleton getInstance() method
+    // Singleton 인스턴스 반환
     public static synchronized DatabaseHelper getInstance(Context context) {
         if (instance == null) {
             instance = new DatabaseHelper(context.getApplicationContext());
@@ -73,7 +73,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(TABLE_CREATE_USER);
-        db.execSQL(TABLE_CREATE_EVENTS);  // Make sure this line is present
+        db.execSQL(TABLE_CREATE_EVENTS);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // Method to insert an event into the database
+    // 이벤트 삽입 메서드
     public long insertEvent(String title, String time, CalendarDay date) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -93,7 +93,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insert(TABLE_EVENTS, null, values);
     }
 
-    // Method to get events for a specific date
+    // 특정 날짜의 이벤트 가져오기
     public List<Event> getEventsForDate(CalendarDay date) {
         List<Event> events = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -111,7 +111,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     Date dateParsed = dateFormat.parse(eventDate);
                     events.add(new Event(CalendarDay.from(dateParsed), title, time));
                 } catch (ParseException e) {
-                    e.printStackTrace(); // 또는 적절한 오류 처리
+                    e.printStackTrace();
                 }
             } while (cursor.moveToNext());
             cursor.close();
@@ -119,7 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return events;
     }
 
-    // Method to get all events from the database
+    // 모든 이벤트 가져오기
     public Set<Event> getAllEvents() {
         Set<Event> events = new HashSet<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -135,7 +135,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     Date dateParsed = dateFormat.parse(eventDate);
                     events.add(new Event(CalendarDay.from(dateParsed), title, time));
                 } catch (ParseException e) {
-                    e.printStackTrace(); // 또는 적절한 오류 처리
+                    e.printStackTrace();
                 }
             } while (cursor.moveToNext());
             cursor.close();

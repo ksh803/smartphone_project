@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.MyViewHolder> {
-    private List<kr.ac.project.Memo> myData;
+    private List<kr.ac.project.Activity.MemoActivity> myData;
     private OnMemoListener onMemoListener;
 
-    public MemoAdapter(List<kr.ac.project.Memo> data, OnMemoListener onMemoListener) {
+    public MemoAdapter(List<kr.ac.project.Activity.MemoActivity> data, OnMemoListener onMemoListener) {
         myData = data != null ? data : new ArrayList<>(); // Ensure myData is not null
         this.onMemoListener = onMemoListener;
     }
@@ -29,7 +29,7 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        kr.ac.project.Memo memo = myData.get(position);
+        kr.ac.project.Activity.MemoActivity memo = myData.get(position);
         holder.textViewTitle.setText(memo.getTitle()); // 제목을 설정
         holder.textViewMemo.setText(memo.getMemo());
         holder.textViewTimestamp.setText(memo.getTimestamp());

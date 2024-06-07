@@ -26,6 +26,6 @@ public class EventDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-        view.addSpan(new DotSpan(5, Color.GREEN)); // Change the color and size as needed
+        view.addSpan(new DotSpan(5, Color.GREEN)); // 원하는 색상과 크기로 변경 가능
     }
 }

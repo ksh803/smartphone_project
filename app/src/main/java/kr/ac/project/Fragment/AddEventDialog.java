@@ -1,25 +1,24 @@
 package kr.ac.project.Fragment;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
+import android.widget.TimePicker;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
-
 import kr.ac.project.R;
 
 public class AddEventDialog extends DialogFragment {
 
     private EditText eventTitle; // 이벤트 제목 입력 필드
-    private EditText eventTime; // 이벤트 시간 입력 필드
+    private TimePicker eventTimePicker; // 이벤트 시간 입력 필드
     private Button saveButton, cancelButton; // 저장 및 취소 버튼
 
     @Nullable
@@ -30,7 +29,8 @@ public class AddEventDialog extends DialogFragment {
 
         // 뷰 초기화
         eventTitle = view.findViewById(R.id.eventTitle);
-        eventTime = view.findViewById(R.id.eventTime);
+        eventTimePicker = view.findViewById(R.id.timePicker);
+        eventTimePicker.setIs24HourView(true);
         saveButton = view.findViewById(R.id.saveButton);
         cancelButton = view.findViewById(R.id.cancelButton);
 
@@ -56,10 +56,13 @@ public class AddEventDialog extends DialogFragment {
     // 이벤트 저장 메서드
     private void saveEvent() {
         String title = eventTitle.getText().toString(); // 입력된 이벤트 제목 가져오기
-        String time = eventTime.getText().toString(); // 입력된 이벤트 시간 가져오기
+        int hour = eventTimePicker.getHour();
+        int minute = eventTimePicker.getMinute();
+        String time = String.format("%02d:%02d", hour, minute); // 시간 형식 맞추기
 
-        if (title.isEmpty() || time.isEmpty()) {
-            // 제목이나 시간이 비어 있을 경우 오류 처리
+        if (title.isEmpty()) {
+            // 제목이 비어 있을 경우 오류 처리
+            Toast.makeText(getActivity(), "제목을 입력하세요.", Toast.LENGTH_SHORT).show();
             return;
         }
 
