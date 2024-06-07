@@ -2,4 +2,7 @@
     <string name="app_name">Project</string>
     <string name="add_memo">Add Memo</string>
     <string name="add_event">Add Event</string>
+    <string name="scheduler">Scheduler</string>
+    <string name="add">+</string>
+    <string name="no_events_for_date">No events for this date.</string>
 </resources>

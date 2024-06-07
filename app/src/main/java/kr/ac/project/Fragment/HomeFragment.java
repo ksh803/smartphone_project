@@ -80,12 +80,18 @@ public class HomeFragment extends Fragment {
         String userID = preferences.getString("username", "");
         String userPhone = preferences.getString("phone", "");
         String userEmail = preferences.getString("email", "");
+        String userAge = preferences.getString("age", "");
+        String userMajor = preferences.getString("major", "");
+        String userUniversity = preferences.getString("university", "");
 
         // 가져온 정보를 뷰에 설정
         homeIDTextView.setText(userID);
         nameEditText.setText(userName);
         homeNumberTextView.setText(userPhone);
         homeEmailTextView.setText(userEmail);
+        ageEditText.setText(userAge);
+        majorEditText.setText(userMajor);
+        uniEditText.setText(userUniversity);
     }
 
     // 편집 모드를 설정하는 메서드
@@ -99,13 +105,27 @@ public class HomeFragment extends Fragment {
         saveButton.setVisibility(enabled ? View.VISIBLE : View.GONE);
     }
 
-    // 사용자 정보를 데이터베이스에 저장하는 메서드
+    // 사용자 정보를 SharedPreferences에 저장하는 메서드
     private void saveUserInfo() {
         // 입력 필드에서 사용자 입력 값을 가져옴
         String id = homeIDTextView.getText().toString().trim();
         String name = nameEditText.getText().toString().trim();
         String phone = homeNumberTextView.getText().toString().trim();
         String email = homeEmailTextView.getText().toString().trim();
+        String age = ageEditText.getText().toString().trim();
+        String major = majorEditText.getText().toString().trim();
+        String university = uniEditText.getText().toString().trim();
+
+        // SharedPreferences에 저장
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("name", name);
+        editor.putString("username", id);
+        editor.putString("phone", phone);
+        editor.putString("email", email);
+        editor.putString("age", age);
+        editor.putString("major", major);
+        editor.putString("university", university);
+        editor.apply();
 
         // ContentValues를 생성하여 데이터베이스를 업데이트
         ContentValues values = new ContentValues();
