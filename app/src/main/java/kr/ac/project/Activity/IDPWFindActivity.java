@@ -46,6 +46,7 @@ public class IDPWFindActivity extends AppCompatActivity {
         });
     }
 
+    // 유저 찾기
     private void findUser(String name, String phone) {
         // 데이터베이스에서 사용자를 찾기 위한 쿼리
         SQLiteDatabase db = dbHelper.getReadableDatabase();

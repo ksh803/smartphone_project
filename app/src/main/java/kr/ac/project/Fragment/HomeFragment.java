@@ -166,7 +166,7 @@ public class HomeFragment extends Fragment {
                 .show();
     }
 
-    // 로그아웃을 처리하는 메서드
+    // 로그아웃 처리
     private void logoutUser() {
         // SharedPreferences에서 로그인 관련 정보만 지움
         SharedPreferences.Editor editor = preferences.edit();

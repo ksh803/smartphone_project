@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         buttonFindIdPW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // ID/PW 찾기 기능을 위한 Intent 생성
+                // ID/PW 찾기 기능, IDPWFindActivity로 들어감
                 Intent intent = new Intent(LoginActivity.this, IDPWFindActivity.class);
                 startActivity(intent);
             }

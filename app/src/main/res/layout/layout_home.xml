@@ -215,6 +215,6 @@
             android:text="로그아웃"
             android:textSize="10dp"
             />
-
+<!-- 로그아웃 버튼-->
     </LinearLayout>
 </LinearLayout>
