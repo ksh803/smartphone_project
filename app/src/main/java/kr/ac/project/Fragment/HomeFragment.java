@@ -90,7 +90,15 @@ public class HomeFragment extends Fragment {
         String userID = preferences.getString("username", "");
         String userPhone = preferences.getString("phone", "");
         String userEmail = preferences.getString("email", "");
-        int userAge = preferences.getInt("age", -1);
+        String userAgeString = preferences.getString("age", "-1"); // age를 String으로 가져옴
+        int userAge = -1;
+
+        try {
+            userAge = Integer.parseInt(userAgeString); // String을 int로 변환
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
         String userMajor = preferences.getString("major", "");
         String userUni = preferences.getString("university", "");
 
@@ -124,7 +132,7 @@ public class HomeFragment extends Fragment {
         String name = nameEditText.getText().toString().trim();
         String phone = homeNumberTextView.getText().toString().trim();
         String email = homeEmailTextView.getText().toString().trim();
-        int age = Integer.parseInt(ageEditText.getText().toString().trim());
+        String age = ageEditText.getText().toString().trim(); // String으로 가져옴
         String major = majorEditText.getText().toString().trim();
         String university = uniEditText.getText().toString().trim();
 
@@ -133,7 +141,7 @@ public class HomeFragment extends Fragment {
         values.put(DatabaseHelper.COLUMN_NAME, name);
         values.put(DatabaseHelper.COLUMN_PHONE, phone);
         values.put(DatabaseHelper.COLUMN_EMAIL, email);
-        values.put(DatabaseHelper.COLUMN_AGE, age);
+        values.put(DatabaseHelper.COLUMN_AGE, Integer.parseInt(age)); // int로 변환하여 저장
         values.put(DatabaseHelper.COLUMN_MAJOR, major);
         values.put(DatabaseHelper.COLUMN_UNIVERSITY, university);
 
@@ -145,7 +153,7 @@ public class HomeFragment extends Fragment {
         editor.putString("name", name);
         editor.putString("phone", phone);
         editor.putString("email", email);
-        editor.putInt("age", age);
+        editor.putString("age", age); // String으로 저장
         editor.putString("major", major);
         editor.putString("university", university);
         editor.apply();

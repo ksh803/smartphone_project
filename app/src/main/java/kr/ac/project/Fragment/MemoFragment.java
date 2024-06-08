@@ -98,9 +98,8 @@ public class MemoFragment extends Fragment {
     }
 
     // 현재 타임스탬프 가져오기
-    private String getCurrentTimestamp() {
-        long time = System.currentTimeMillis();
-        return String.valueOf(time);
+    private long getCurrentTimestamp() {  // Changed return type to long
+        return System.currentTimeMillis();  // Directly returning the long value
     }
 
     // 메모 수정/삭제 옵션 다이얼로그 표시

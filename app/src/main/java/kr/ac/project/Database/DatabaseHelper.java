@@ -18,11 +18,12 @@ import java.util.Locale;
 import java.util.Set;
 
 import kr.ac.project.Event;
+import kr.ac.project.Activity.MemoActivity;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "user.db";
-    private static final int DATABASE_VERSION = 2; // Incremented the version number
+    private static final int DATABASE_VERSION = 3; // Incremented the version number
 
     private static DatabaseHelper instance; // Singleton instance
 
@@ -64,6 +65,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_EVENT_TIME + " TEXT, " +
                     COLUMN_EVENT_DATE + " TEXT);";
 
+    // 메모 테이블 및 컬럼 이름 정의
+    public static final String TABLE_MEMO = "memo";
+    public static final String COLUMN_MEMO_ID = "memo_id";
+    public static final String COLUMN_MEMO_TITLE = "title";
+    public static final String COLUMN_MEMO_TEXT = "text";
+    public static final String COLUMN_MEMO_TIMESTAMP = "timestamp";
+
+    private static final String TABLE_CREATE_MEMO =
+            "CREATE TABLE " + TABLE_MEMO + " (" +
+                    COLUMN_MEMO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_MEMO_TITLE + " TEXT, " +
+                    COLUMN_MEMO_TEXT + " TEXT, " +
+                    COLUMN_MEMO_TIMESTAMP + " INTEGER);";
+
     private DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -80,9 +95,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(TABLE_CREATE_USER);
         db.execSQL(TABLE_CREATE_EVENTS);
+        db.execSQL(TABLE_CREATE_MEMO); // 메모 테이블 생성
     }
 
-    // 홈 화면 메모
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 2) {
@@ -91,6 +106,64 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL("ALTER TABLE " + TABLE_USER + " ADD COLUMN " + COLUMN_MAJOR + " TEXT;");
             db.execSQL("ALTER TABLE " + TABLE_USER + " ADD COLUMN " + COLUMN_UNIVERSITY + " TEXT;");
         }
+        if (oldVersion < 3) {
+            // Check if memo table exists before creating it
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_MEMO + " (" +
+                    COLUMN_MEMO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_MEMO_TITLE + " TEXT, " +
+                    COLUMN_MEMO_TEXT + " TEXT, " +
+                    COLUMN_MEMO_TIMESTAMP + " INTEGER);");
+        }
+    }
+
+    // 메모 삽입 메서드
+    public long insertMemo(String title, String text) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_MEMO_TITLE, title);
+        values.put(COLUMN_MEMO_TEXT, text);
+        values.put(COLUMN_MEMO_TIMESTAMP, System.currentTimeMillis());
+        return db.insert(TABLE_MEMO, null, values);
+    }
+
+    // 모든 메모 가져오기
+    public List<MemoActivity> getAllMemos() {
+        List<MemoActivity> memoList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + TABLE_MEMO;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_MEMO_ID)); // 수정된 부분
+                String title = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MEMO_TITLE)); // 수정된 부분
+                String text = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MEMO_TEXT)); // 수정된 부분
+                long timestamp = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_MEMO_TIMESTAMP)); // 수정된 부분
+
+                MemoActivity memo = new MemoActivity(id, title, text, timestamp);
+                memoList.add(memo);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return memoList;
+    }
+
+    // 메모 삭제 메서드
+    public void deleteMemo(long id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_MEMO, COLUMN_MEMO_ID + " = ?", new String[]{String.valueOf(id)});
+    }
+
+    // 메모 업데이트 메서드
+    public void updateMemo(MemoActivity memo) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_MEMO_TITLE, memo.getTitle());
+        values.put(COLUMN_MEMO_TEXT, memo.getText());
+        db.update(TABLE_MEMO, values, COLUMN_MEMO_ID + " = ?", new String[]{String.valueOf(memo.getId())});
     }
 
     // 이벤트 삽입 메서드
@@ -114,9 +187,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor != null && cursor.moveToFirst()) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
             do {
-                String title = cursor.getString(cursor.getColumnIndex(COLUMN_EVENT_TITLE));
-                String time = cursor.getString(cursor.getColumnIndex(COLUMN_EVENT_TIME));
-                String eventDate = cursor.getString(cursor.getColumnIndex(COLUMN_EVENT_DATE));
+                String title = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_TITLE));
+                String time = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_TIME));
+                String eventDate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_DATE));
                 try {
                     Date dateParsed = dateFormat.parse(eventDate);
                     events.add(new Event(CalendarDay.from(dateParsed), title, time));
@@ -138,9 +211,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor != null && cursor.moveToFirst()) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
             do {
-                String title = cursor.getString(cursor.getColumnIndex(COLUMN_EVENT_TITLE));
-                String time = cursor.getString(cursor.getColumnIndex(COLUMN_EVENT_TIME));
-                String eventDate = cursor.getString(cursor.getColumnIndex(COLUMN_EVENT_DATE));
+                String title = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_TITLE));
+                String time = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_TIME));
+                String eventDate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_DATE));
                 try {
                     Date dateParsed = dateFormat.parse(eventDate);
                     events.add(new Event(CalendarDay.from(dateParsed), title, time));
