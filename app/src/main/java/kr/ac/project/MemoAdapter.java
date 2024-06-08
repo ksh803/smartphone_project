@@ -4,61 +4,66 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.MyViewHolder> {
-    private List<kr.ac.project.Activity.MemoActivity> myData;
+import kr.ac.project.Activity.MemoActivity;
+
+public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.MemoViewHolder> {
+
+    private List<MemoActivity> memoList;
     private OnMemoListener onMemoListener;
 
-    public MemoAdapter(List<kr.ac.project.Activity.MemoActivity> data, OnMemoListener onMemoListener) {
-        myData = data != null ? data : new ArrayList<>(); // Ensure myData is not null
+    public MemoAdapter(List<MemoActivity> memoList, OnMemoListener onMemoListener) {
+        this.memoList = memoList;
         this.onMemoListener = onMemoListener;
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_view, parent, false);
-        return new MyViewHolder(view, onMemoListener);
+    public MemoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, parent, false);
+        return new MemoViewHolder(view, onMemoListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        kr.ac.project.Activity.MemoActivity memo = myData.get(position);
-        holder.textViewTitle.setText(memo.getTitle()); // 제목을 설정
-        holder.textViewMemo.setText(memo.getMemo());
-        holder.textViewTimestamp.setText(memo.getTimestamp());
+    public void onBindViewHolder(@NonNull MemoViewHolder holder, int position) {
+        MemoActivity memo = memoList.get(position);
+        holder.textViewTitle.setText(memo.getTitle());
+        holder.textViewMemo.setText(memo.getText()); // 수정된 부분
     }
 
     @Override
     public int getItemCount() {
-        return myData.size();
+        return memoList.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
-        public TextView textViewTitle; // 제목을 위한 TextView 추가
-        public TextView textViewMemo;
-        public TextView textViewTimestamp;
+    public class MemoViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
+
+        TextView textViewTitle;
+        TextView textViewMemo;
         OnMemoListener onMemoListener;
 
-        public MyViewHolder(View view, OnMemoListener onMemoListener) {
-            super(view);
-            textViewTitle = view.findViewById(R.id.textViewTitle); // 제목을 위한 TextView 초기화
-            textViewMemo = view.findViewById(R.id.textViewMemo);
-            textViewTimestamp = view.findViewById(R.id.textViewTimestamp);
+        public MemoViewHolder(@NonNull View itemView, OnMemoListener onMemoListener) {
+            super(itemView);
+            textViewTitle = itemView.findViewById(R.id.textViewTitle);
+            textViewMemo = itemView.findViewById(R.id.textViewMemo);
             this.onMemoListener = onMemoListener;
 
-            view.setOnLongClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
         public boolean onLongClick(View v) {
-            onMemoListener.onMemoLongClick(getAdapterPosition());
+            if (onMemoListener != null) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    onMemoListener.onMemoLongClick(position);
+                }
+            }
             return true;
         }
     }
